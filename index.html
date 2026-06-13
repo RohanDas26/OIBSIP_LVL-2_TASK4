@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPortal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Auth Container -->
+    <div class="auth-container" id="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Log in to your account to continue</p>
+            </div>
+
+            <!-- OAuth Buttons -->
+            <div class="oauth-group">
+                <button id="google-login" class="oauth-btn">
+                    <i class="fa-brands fa-google" style="color: #DB4437; font-size: 1.2rem;"></i>
+                    Continue with Google
+                </button>
+                <button id="github-login" class="oauth-btn">
+                    <i class="fa-brands fa-github" style="font-size: 1.2rem;"></i>
+                    Continue with GitHub
+                </button>
+            </div>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <!-- Email/Password Form -->
+            <form id="email-form" class="auth-form">
+                <div class="input-group">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" placeholder="name@company.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="submit-btn" class="btn-primary">Sign In</button>
+                </div>
+                <p class="error-message" id="error-message"></p>
+                <div class="auth-footer">
+                    <span id="toggle-text">Don't have an account?</span>
+                    <a href="#" id="toggle-mode">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Container (Hidden by default) -->
+    <div class="dashboard-container hidden" id="dashboard-container">
+        <nav class="navbar">
+            <div class="logo">AuthPortal</div>
+            <button id="logout-btn" class="btn-secondary">Sign Out</button>
+        </nav>
+        <main class="dashboard-content">
+            <div class="profile-card">
+                <img src="" alt="Profile" id="user-photo" class="profile-photo hidden">
+                <div class="profile-info">
+                    <h1 id="welcome-message">Loading...</h1>
+                    <p id="user-email">email@example.com</p>
+                </div>
+                <div class="badge">Authenticated successfully</div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
