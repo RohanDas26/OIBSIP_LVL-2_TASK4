@@ -16,25 +16,24 @@
             <div class="brand-hero">
                 <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
                 <h1>AuthPortal</h1>
-                <p>A secure authentication system.<br>Register an account, log in, and access your personal dashboard.</p>
+                <p>Your private space on the web. Register an account, log in securely, and access your personal dashboard.</p>
                 <ul class="feature-list">
-                    <li><i class="fa-solid fa-check"></i> Secure credential storage</li>
-                    <li><i class="fa-solid fa-check"></i> Login verification</li>
-                    <li><i class="fa-solid fa-check"></i> Protected dashboard</li>
+                    <li><i class="fa-solid fa-check"></i> SHA-256 hashed passwords</li>
+                    <li><i class="fa-solid fa-check"></i> Login attempt lockout</li>
+                    <li><i class="fa-solid fa-check"></i> Auto session timeout</li>
+                    <li><i class="fa-solid fa-check"></i> Private encrypted notes</li>
                 </ul>
             </div>
         </div>
 
         <div class="split-right">
             <div class="auth-card">
-
-                <!-- Tab Switcher -->
                 <div class="tab-switcher">
                     <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
                     <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
                 </div>
 
-                <!-- Sign In Form -->
+                <!-- SIGN IN -->
                 <div id="signin-panel" class="panel active">
                     <div class="card-header">
                         <h2>Welcome back</h2>
@@ -42,47 +41,35 @@
                     </div>
                     <form id="signin-form" onsubmit="handleSignIn(event)">
                         <div class="field-group">
-                            <label for="si-email">Email address</label>
+                            <label>Email address</label>
                             <div class="input-wrap">
                                 <i class="fa-regular fa-envelope"></i>
                                 <input type="email" id="si-email" placeholder="name@email.com" required>
                             </div>
                         </div>
                         <div class="field-group">
-                            <label for="si-password">Password</label>
+                            <label>Password</label>
                             <div class="input-wrap">
                                 <i class="fa-solid fa-lock"></i>
                                 <input type="password" id="si-password" placeholder="Your password" required>
-                                <button type="button" class="toggle-pw" onclick="togglePw('si-password', this)">
-                                    <i class="fa-regular fa-eye"></i>
-                                </button>
+                                <button type="button" class="toggle-pw" onclick="togglePw('si-password',this)"><i class="fa-regular fa-eye"></i></button>
                             </div>
                         </div>
                         <p class="error-msg" id="si-error"></p>
                         <button type="submit" class="btn-primary" id="si-btn">
-                            <span>Sign In</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <span>Sign In</span><i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </form>
-
                     <div class="divider"><span>or sign in with</span></div>
-
                     <div class="oauth-row">
-                        <button class="oauth-chip google" onclick="handleOAuth('Google')">
-                            <i class="fa-brands fa-google"></i> Google
-                        </button>
-                        <button class="oauth-chip github" onclick="handleOAuth('GitHub')">
-                            <i class="fa-brands fa-github"></i> GitHub
-                        </button>
-                        <button class="oauth-chip facebook" onclick="handleOAuth('Facebook')">
-                            <i class="fa-brands fa-facebook-f"></i> Facebook
-                        </button>
+                        <button class="oauth-chip google" onclick="handleOAuth('Google')"><i class="fa-brands fa-google"></i> Google</button>
+                        <button class="oauth-chip github" onclick="handleOAuth('GitHub')"><i class="fa-brands fa-github"></i> GitHub</button>
+                        <button class="oauth-chip facebook" onclick="handleOAuth('Facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
                     </div>
-
                     <p class="switch-hint">No account? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
                 </div>
 
-                <!-- Sign Up Form -->
+                <!-- SIGN UP -->
                 <div id="signup-panel" class="panel">
                     <div class="card-header">
                         <h2>Create account</h2>
@@ -90,39 +77,39 @@
                     </div>
                     <form id="signup-form" onsubmit="handleSignUp(event)">
                         <div class="field-group">
-                            <label for="su-name">Full name</label>
+                            <label>Full name</label>
                             <div class="input-wrap">
                                 <i class="fa-regular fa-user"></i>
                                 <input type="text" id="su-name" placeholder="Your full name" required>
                             </div>
                         </div>
                         <div class="field-group">
-                            <label for="su-email">Email address</label>
+                            <label>Email address</label>
                             <div class="input-wrap">
                                 <i class="fa-regular fa-envelope"></i>
                                 <input type="email" id="su-email" placeholder="name@email.com" required>
                             </div>
                         </div>
                         <div class="field-group">
-                            <label for="su-password">Password</label>
+                            <label>Password</label>
                             <div class="input-wrap">
                                 <i class="fa-solid fa-lock"></i>
                                 <input type="password" id="su-password" placeholder="Min. 6 characters" required minlength="6">
-                                <button type="button" class="toggle-pw" onclick="togglePw('su-password', this)">
-                                    <i class="fa-regular fa-eye"></i>
-                                </button>
+                                <button type="button" class="toggle-pw" onclick="togglePw('su-password',this)"><i class="fa-regular fa-eye"></i></button>
+                            </div>
+                            <div class="strength-row">
+                                <div class="strength-bar" id="strength-bar"></div>
+                                <span class="strength-label" id="strength-label"></span>
                             </div>
                         </div>
-                        <p class="error-msg" id="su-error"></p>
+                        <p class="error-msg"   id="su-error"></p>
                         <p class="success-msg" id="su-success"></p>
                         <button type="submit" class="btn-primary" id="su-btn">
-                            <span>Create Account</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <span>Create Account</span><i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </form>
                     <p class="switch-hint">Have an account? <a href="#" onclick="switchTab('signin')">Sign in</a></p>
                 </div>
-
             </div>
         </div>
     </div>
@@ -131,8 +118,7 @@
     <div id="dashboard-screen" class="screen">
         <nav class="dash-nav">
             <div class="nav-brand">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span>AuthPortal</span>
+                <i class="fa-solid fa-shield-halved"></i><span>AuthPortal</span>
             </div>
             <div class="nav-right">
                 <div class="user-pill">
@@ -146,6 +132,7 @@
         </nav>
 
         <main class="dash-main">
+            <!-- Welcome -->
             <div class="welcome-banner">
                 <div>
                     <h1 id="welcome-text">Welcome back!</h1>
@@ -154,31 +141,38 @@
                 <span class="badge-secure"><i class="fa-solid fa-circle-check"></i> Secure Session</span>
             </div>
 
+            <!-- Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
-                    <div>
-                        <p class="stat-label">Registered Users</p>
-                        <p class="stat-val" id="stat-users">0</p>
-                    </div>
+                    <div><p class="stat-label">Registered Users</p><p class="stat-val" id="stat-users">0</p></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon green"><i class="fa-solid fa-key"></i></div>
-                    <div>
-                        <p class="stat-label">Auth Method</p>
-                        <p class="stat-val" id="stat-method">Email</p>
-                    </div>
+                    <div><p class="stat-label">Auth Method</p><p class="stat-val" id="stat-method">Email</p></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon purple"><i class="fa-solid fa-clock"></i></div>
-                    <div>
-                        <p class="stat-label">Login Time</p>
-                        <p class="stat-val" id="stat-time">-</p>
-                    </div>
+                    <div><p class="stat-label">Session Started</p><p class="stat-val" id="stat-time">-</p></div>
                 </div>
             </div>
 
-            <!-- User Database Table -->
+            <!-- Private Notes -->
+            <div class="notes-section">
+                <div class="notes-header">
+                    <h2><i class="fa-solid fa-note-sticky"></i> Private Notes</h2>
+                    <span class="count-badge" id="notes-count">0 notes</span>
+                </div>
+                <div class="note-compose">
+                    <textarea id="note-input" placeholder="Write something private... (Ctrl+Enter to save)" rows="3"></textarea>
+                    <button class="btn-add-note" onclick="addNote()">
+                        <i class="fa-solid fa-plus"></i> Add Note
+                    </button>
+                </div>
+                <div id="notes-list"></div>
+            </div>
+
+            <!-- User DB Table -->
             <div class="db-section">
                 <div class="db-header">
                     <h2><i class="fa-solid fa-database"></i> Registered Users</h2>
@@ -187,16 +181,10 @@
                 <div class="table-wrapper">
                     <table class="user-table">
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Provider</th>
-                                <th>Registered</th>
-                            </tr>
+                            <tr><th>#</th><th>Name</th><th>Email</th><th>Provider</th><th>Registered</th></tr>
                         </thead>
                         <tbody id="user-table-body">
-                            <tr><td colspan="5" class="empty-row">No users registered yet.</td></tr>
+                            <tr><td colspan="5" class="empty-row">No users yet.</td></tr>
                         </tbody>
                     </table>
                 </div>
