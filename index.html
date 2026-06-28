@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,188 +10,311 @@
 </head>
 <body>
 
-    <!-- AUTH SCREEN -->
-    <div id="auth-screen" class="screen active">
-        <div class="split-left">
-            <div class="brand-hero">
-                <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <h1>AuthPortal</h1>
-                <p>Your private space on the web. Register an account, log in securely, and access your personal dashboard.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-check"></i> SHA-256 hashed passwords</li>
-                    <li><i class="fa-solid fa-check"></i> Login attempt lockout</li>
-                    <li><i class="fa-solid fa-check"></i> Auto session timeout</li>
-                    <li><i class="fa-solid fa-check"></i> Private encrypted notes</li>
-                </ul>
-            </div>
+<!-- ═══════════════════════════════════════════════════════ AUTH SCREEN -->
+<div id="auth-screen" class="screen active">
+    <div class="split-left">
+        <div class="brand-hero">
+            <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h1>AuthPortal</h1>
+            <p>Your private space on the web. Register, log in securely, and access your personal dashboard.</p>
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-check"></i> SHA-256 hashed passwords</li>
+                <li><i class="fa-solid fa-check"></i> Login lockout protection</li>
+                <li><i class="fa-solid fa-check"></i> Auto session timeout</li>
+                <li><i class="fa-solid fa-check"></i> Private tagged notes</li>
+                <li><i class="fa-solid fa-check"></i> Login history tracking</li>
+            </ul>
         </div>
+    </div>
+    <div class="split-right">
+        <div class="auth-card">
+            <div class="tab-switcher">
+                <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            </div>
 
-        <div class="split-right">
-            <div class="auth-card">
-                <div class="tab-switcher">
-                    <button class="tab-btn active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
-                    <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            <!-- SIGN IN -->
+            <div id="signin-panel" class="panel active">
+                <div class="card-header"><h2>Welcome back</h2><p>Enter your credentials to continue</p></div>
+                <form onsubmit="handleSignIn(event)">
+                    <div class="field-group">
+                        <label>Email address</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="si-email" placeholder="name@email.com" required>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label>Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="si-password" placeholder="Your password" required>
+                            <button type="button" class="toggle-pw" onclick="togglePw('si-password',this)"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <p class="error-msg" id="si-error"></p>
+                    <button type="submit" class="btn-primary" id="si-btn"><span>Sign In</span><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <div class="divider"><span>or sign in with</span></div>
+                <div class="oauth-row">
+                    <button class="oauth-chip google" onclick="handleOAuth('Google')"><i class="fa-brands fa-google"></i> Google</button>
+                    <button class="oauth-chip github" onclick="handleOAuth('GitHub')"><i class="fa-brands fa-github"></i> GitHub</button>
+                    <button class="oauth-chip facebook" onclick="handleOAuth('Facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
                 </div>
+                <p class="switch-hint">No account? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
+            </div>
 
-                <!-- SIGN IN -->
-                <div id="signin-panel" class="panel active">
-                    <div class="card-header">
-                        <h2>Welcome back</h2>
-                        <p>Enter your credentials to continue</p>
+            <!-- SIGN UP -->
+            <div id="signup-panel" class="panel">
+                <div class="card-header"><h2>Create account</h2><p>Fill in the details to get started</p></div>
+                <form onsubmit="handleSignUp(event)">
+                    <div class="field-group">
+                        <label>Full name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="su-name" placeholder="Your full name" required>
+                        </div>
                     </div>
-                    <form id="signin-form" onsubmit="handleSignIn(event)">
-                        <div class="field-group">
-                            <label>Email address</label>
-                            <div class="input-wrap">
-                                <i class="fa-regular fa-envelope"></i>
-                                <input type="email" id="si-email" placeholder="name@email.com" required>
-                            </div>
+                    <div class="field-group">
+                        <label>Email address</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="su-email" placeholder="name@email.com" required>
                         </div>
-                        <div class="field-group">
-                            <label>Password</label>
-                            <div class="input-wrap">
-                                <i class="fa-solid fa-lock"></i>
-                                <input type="password" id="si-password" placeholder="Your password" required>
-                                <button type="button" class="toggle-pw" onclick="togglePw('si-password',this)"><i class="fa-regular fa-eye"></i></button>
-                            </div>
-                        </div>
-                        <p class="error-msg" id="si-error"></p>
-                        <button type="submit" class="btn-primary" id="si-btn">
-                            <span>Sign In</span><i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
-                    <div class="divider"><span>or sign in with</span></div>
-                    <div class="oauth-row">
-                        <button class="oauth-chip google" onclick="handleOAuth('Google')"><i class="fa-brands fa-google"></i> Google</button>
-                        <button class="oauth-chip github" onclick="handleOAuth('GitHub')"><i class="fa-brands fa-github"></i> GitHub</button>
-                        <button class="oauth-chip facebook" onclick="handleOAuth('Facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
                     </div>
-                    <p class="switch-hint">No account? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
-                </div>
-
-                <!-- SIGN UP -->
-                <div id="signup-panel" class="panel">
-                    <div class="card-header">
-                        <h2>Create account</h2>
-                        <p>Fill in the details to get started</p>
+                    <div class="field-group">
+                        <label>Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="su-password" placeholder="Min. 6 characters" required minlength="6">
+                            <button type="button" class="toggle-pw" onclick="togglePw('su-password',this)"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                        <div class="strength-row">
+                            <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
+                            <span class="strength-label" id="strength-label"></span>
+                        </div>
                     </div>
-                    <form id="signup-form" onsubmit="handleSignUp(event)">
-                        <div class="field-group">
-                            <label>Full name</label>
-                            <div class="input-wrap">
-                                <i class="fa-regular fa-user"></i>
-                                <input type="text" id="su-name" placeholder="Your full name" required>
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label>Email address</label>
-                            <div class="input-wrap">
-                                <i class="fa-regular fa-envelope"></i>
-                                <input type="email" id="su-email" placeholder="name@email.com" required>
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label>Password</label>
-                            <div class="input-wrap">
-                                <i class="fa-solid fa-lock"></i>
-                                <input type="password" id="su-password" placeholder="Min. 6 characters" required minlength="6">
-                                <button type="button" class="toggle-pw" onclick="togglePw('su-password',this)"><i class="fa-regular fa-eye"></i></button>
-                            </div>
-                            <div class="strength-row">
-                                <div class="strength-bar" id="strength-bar"></div>
-                                <span class="strength-label" id="strength-label"></span>
-                            </div>
-                        </div>
-                        <p class="error-msg"   id="su-error"></p>
-                        <p class="success-msg" id="su-success"></p>
-                        <button type="submit" class="btn-primary" id="su-btn">
-                            <span>Create Account</span><i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
-                    <p class="switch-hint">Have an account? <a href="#" onclick="switchTab('signin')">Sign in</a></p>
-                </div>
+                    <p class="error-msg" id="su-error"></p>
+                    <p class="success-msg" id="su-success"></p>
+                    <button type="submit" class="btn-primary" id="su-btn"><span>Create Account</span><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <p class="switch-hint">Have an account? <a href="#" onclick="switchTab('signin')">Sign in</a></p>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- DASHBOARD SCREEN -->
-    <div id="dashboard-screen" class="screen">
-        <nav class="dash-nav">
-            <div class="nav-brand">
-                <i class="fa-solid fa-shield-halved"></i><span>AuthPortal</span>
+<!-- ═══════════════════════════════════════════════════ DASHBOARD SCREEN -->
+<div id="dashboard-screen" class="screen">
+    <nav class="dash-nav">
+        <div class="nav-brand"><i class="fa-solid fa-shield-halved"></i><span>AuthPortal</span></div>
+        <div class="nav-center">
+            <button class="nav-tab active" data-tab="notes" onclick="switchDashTab('notes')"><i class="fa-solid fa-note-sticky"></i> Notes</button>
+            <button class="nav-tab" data-tab="history" onclick="switchDashTab('history')"><i class="fa-solid fa-clock-rotate-left"></i> History</button>
+            <button class="nav-tab" data-tab="settings" onclick="switchDashTab('settings')"><i class="fa-solid fa-gear"></i> Settings</button>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+            <div class="user-pill">
+                <div class="user-avatar" id="nav-avatar-initials"></div>
+                <span id="nav-name"></span>
             </div>
-            <div class="nav-right">
-                <div class="user-pill">
-                    <div class="user-avatar" id="nav-avatar-initials"></div>
-                    <span id="nav-name"></span>
-                </div>
-                <button class="btn-logout" onclick="handleLogout()">
-                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-                </button>
-            </div>
-        </nav>
+            <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
+        </div>
+    </nav>
 
-        <main class="dash-main">
-            <!-- Welcome -->
-            <div class="welcome-banner">
-                <div>
-                    <h1 id="welcome-text">Welcome back!</h1>
-                    <p id="welcome-sub">You are securely authenticated.</p>
-                </div>
-                <span class="badge-secure"><i class="fa-solid fa-circle-check"></i> Secure Session</span>
+    <main class="dash-main">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div>
+                <h1 id="welcome-text">Welcome back!</h1>
+                <p id="welcome-sub">You are securely authenticated.</p>
             </div>
+            <span class="badge-secure"><i class="fa-solid fa-circle-check"></i> Secure Session</span>
+        </div>
 
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
-                    <div><p class="stat-label">Registered Users</p><p class="stat-val" id="stat-users">0</p></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green"><i class="fa-solid fa-key"></i></div>
-                    <div><p class="stat-label">Auth Method</p><p class="stat-val" id="stat-method">Email</p></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon purple"><i class="fa-solid fa-clock"></i></div>
-                    <div><p class="stat-label">Session Started</p><p class="stat-val" id="stat-time">-</p></div>
-                </div>
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
+                <div><p class="stat-label">Registered Users</p><p class="stat-val" id="stat-users">0</p></div>
             </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fa-solid fa-key"></i></div>
+                <div><p class="stat-label">Auth Method</p><p class="stat-val" id="stat-method">Email</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fa-solid fa-clock"></i></div>
+                <div><p class="stat-label">Session Started</p><p class="stat-val" id="stat-time">-</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow"><i class="fa-solid fa-note-sticky"></i></div>
+                <div><p class="stat-label">Your Notes</p><p class="stat-val" id="stat-notes">0</p></div>
+            </div>
+        </div>
 
-            <!-- Private Notes -->
-            <div class="notes-section">
-                <div class="notes-header">
+        <!-- ── NOTES TAB ── -->
+        <div class="dash-tab active" id="tab-notes">
+            <div class="section-card">
+                <div class="section-header">
                     <h2><i class="fa-solid fa-note-sticky"></i> Private Notes</h2>
                     <span class="count-badge" id="notes-count">0 notes</span>
                 </div>
+
+                <!-- Compose -->
                 <div class="note-compose">
                     <textarea id="note-input" placeholder="Write something private... (Ctrl+Enter to save)" rows="3"></textarea>
-                    <button class="btn-add-note" onclick="addNote()">
-                        <i class="fa-solid fa-plus"></i> Add Note
-                    </button>
+                    <div class="compose-footer">
+                        <div class="tag-row">
+                            <span class="tag-label">Tag:</span>
+                            <button class="tag-chip active" data-tag="none" onclick="selectTag(this)">None</button>
+                            <button class="tag-chip work" data-tag="work" onclick="selectTag(this)">Work</button>
+                            <button class="tag-chip personal" data-tag="personal" onclick="selectTag(this)">Personal</button>
+                            <button class="tag-chip ideas" data-tag="ideas" onclick="selectTag(this)">Ideas</button>
+                            <button class="tag-chip urgent" data-tag="urgent" onclick="selectTag(this)">Urgent</button>
+                        </div>
+                        <button class="btn-add-note" onclick="addNote()"><i class="fa-solid fa-plus"></i> Add Note</button>
+                    </div>
                 </div>
+
+                <!-- Search + Filter -->
+                <div class="notes-toolbar">
+                    <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="note-search" placeholder="Search notes..." oninput="renderNotesList()">
+                    </div>
+                    <div class="filter-row">
+                        <button class="filter-btn active" data-filter="all" onclick="selectFilter(this)">All</button>
+                        <button class="filter-btn" data-filter="pinned" onclick="selectFilter(this)">Pinned</button>
+                        <button class="filter-btn work" data-filter="work" onclick="selectFilter(this)">Work</button>
+                        <button class="filter-btn personal" data-filter="personal" onclick="selectFilter(this)">Personal</button>
+                        <button class="filter-btn ideas" data-filter="ideas" onclick="selectFilter(this)">Ideas</button>
+                        <button class="filter-btn urgent" data-filter="urgent" onclick="selectFilter(this)">Urgent</button>
+                    </div>
+                </div>
+
                 <div id="notes-list"></div>
             </div>
+        </div>
 
-            <!-- User DB Table -->
-            <div class="db-section">
-                <div class="db-header">
-                    <h2><i class="fa-solid fa-database"></i> Registered Users</h2>
+        <!-- ── HISTORY TAB ── -->
+        <div class="dash-tab" id="tab-history">
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-clock-rotate-left"></i> Login History</h2>
+                    <span class="count-badge">Last 10 sessions</span>
+                </div>
+                <div class="table-wrapper">
+                    <table class="user-table">
+                        <thead><tr><th>#</th><th>Date & Time</th><th>Provider</th><th>Status</th></tr></thead>
+                        <tbody id="history-tbody"><tr><td colspan="4" class="empty-row">No history yet.</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="section-header" style="margin-top:28px; border-top:1px solid var(--border); padding-top:22px;">
+                    <h2><i class="fa-solid fa-database"></i> All Registered Users</h2>
                     <span class="count-badge" id="db-count">0 users</span>
                 </div>
                 <div class="table-wrapper">
                     <table class="user-table">
-                        <thead>
-                            <tr><th>#</th><th>Name</th><th>Email</th><th>Provider</th><th>Registered</th></tr>
-                        </thead>
-                        <tbody id="user-table-body">
-                            <tr><td colspan="5" class="empty-row">No users yet.</td></tr>
-                        </tbody>
+                        <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Provider</th><th>Registered</th></tr></thead>
+                        <tbody id="user-table-body"><tr><td colspan="5" class="empty-row">No users yet.</td></tr></tbody>
                     </table>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
 
-    <script src="script.js"></script>
+        <!-- ── SETTINGS TAB ── -->
+        <div class="dash-tab" id="tab-settings">
+            <div class="settings-grid">
+
+                <!-- Profile -->
+                <div class="section-card">
+                    <div class="section-header"><h2><i class="fa-solid fa-user-pen"></i> Profile</h2></div>
+                    <div class="settings-body">
+                        <div class="avatar-picker">
+                            <div class="avatar-preview" id="avatar-preview"></div>
+                            <div class="color-swatches" id="color-swatches"></div>
+                        </div>
+                        <div class="field-group" style="margin-top:20px;">
+                            <label>Display name</label>
+                            <div class="input-wrap">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" id="profile-name" placeholder="Your name">
+                            </div>
+                        </div>
+                        <p class="success-msg" id="profile-success"></p>
+                        <button class="btn-primary" onclick="saveProfile()"><span>Save Changes</span></button>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="section-card">
+                    <div class="section-header"><h2><i class="fa-solid fa-lock"></i> Change Password</h2></div>
+                    <div class="settings-body">
+                        <div class="field-group">
+                            <label>Current password</label>
+                            <div class="input-wrap">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="cp-current" placeholder="Current password">
+                                <button type="button" class="toggle-pw" onclick="togglePw('cp-current',this)"><i class="fa-regular fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <label>New password</label>
+                            <div class="input-wrap">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="cp-new" placeholder="New password (min 6)">
+                                <button type="button" class="toggle-pw" onclick="togglePw('cp-new',this)"><i class="fa-regular fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <label>Confirm new password</label>
+                            <div class="input-wrap">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="cp-confirm" placeholder="Confirm new password">
+                            </div>
+                        </div>
+                        <p class="error-msg" id="cp-error"></p>
+                        <p class="success-msg" id="cp-success"></p>
+                        <button class="btn-primary" onclick="changePassword()"><span>Update Password</span></button>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="section-card danger-card">
+                    <div class="section-header"><h2><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h2></div>
+                    <div class="settings-body">
+                        <p class="danger-desc">Permanently deletes your account, all your notes, and all login history. This action <strong>cannot</strong> be undone.</p>
+                        <button class="btn-danger" onclick="deleteAccount()"><i class="fa-solid fa-trash"></i> Delete My Account</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Edit Note Modal -->
+<div class="modal-backdrop" id="edit-modal" onclick="closeEditModal(event)">
+    <div class="modal">
+        <div class="modal-header"><h3>Edit Note</h3><button class="modal-close" onclick="document.getElementById('edit-modal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button></div>
+        <textarea id="edit-note-text" rows="5"></textarea>
+        <div class="modal-tags">
+            <button class="tag-chip active" data-tag="none" onclick="selectModalTag(this)">None</button>
+            <button class="tag-chip work" data-tag="work" onclick="selectModalTag(this)">Work</button>
+            <button class="tag-chip personal" data-tag="personal" onclick="selectModalTag(this)">Personal</button>
+            <button class="tag-chip ideas" data-tag="ideas" onclick="selectModalTag(this)">Ideas</button>
+            <button class="tag-chip urgent" data-tag="urgent" onclick="selectModalTag(this)">Urgent</button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="document.getElementById('edit-modal').classList.remove('active')">Cancel</button>
+            <button class="btn-primary" onclick="saveEditedNote()"><span>Save Changes</span></button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
